@@ -22,7 +22,7 @@ abstract AbstractWSClient
 abstract WebSocketHandler
 
 "Handle a text frame."
-on_text(t::WebSocketHandler, ::UTF8String) = nothing
+on_text(t::WebSocketHandler, ::String) = nothing
 
 "Handle a binary frame."
 on_binary(t::WebSocketHandler, ::Vector{UInt8}) = nothing

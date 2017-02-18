@@ -29,7 +29,7 @@ backoff_min(b::Backoff) = b.min
 backoff_max(b::Backoff) = b.max
 
 "Get the next backoff value."
-function call(b::Backoff)
+function (b::Backoff)()
     v = b.min + atan(b.state*b.state/32) * 2 / pi * (b.max - b.min)
     b.state += 1
     v
@@ -48,7 +48,7 @@ reset(b::RandomizedBackoff) = reset(b.backoff)
 backoff_min(b::RandomizedBackoff) = backoff_min(b.backoff)
 backoff_max(b::RandomizedBackoff) = backoff_max(b.backoff)
 
-function call(b::RandomizedBackoff)
+function (b::RandomizedBackoff)()
     (r,) = (rand(b.rng, Float64, 1) - 0.5) * 2 * b.interval
     v = b.backoff()
     max(backoff_min(b), min(backoff_max(b), v + r))
