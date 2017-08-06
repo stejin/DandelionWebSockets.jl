@@ -25,7 +25,7 @@ export ClientLogic
 These commands are sent as arguments to the different `handle` functions on `ClientLogic`. Each
 command represents an action on a WebSocket, such as sending a text frame, ping request, or closing
 the connection."
-abstract ClientLogicInput
+abstract type ClientLogicInput end
 
 "Send a text frame, sent to `ClientLogic`."
 immutable SendTextFrame <: ClientLogicInput
@@ -270,7 +270,7 @@ end
 function masking!(input::Vector{UInt8}, mask::Vector{UInt8})
 	m = 1
 	for i in 1:length(input)
-		input[i] = input[i] $ mask[(m - 1) % 4 + 1]
+		input[i] = input[i] ⊻ mask[(m - 1) % 4 + 1]
 		m += 1
 	end
 end

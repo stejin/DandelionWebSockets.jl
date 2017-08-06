@@ -11,7 +11,7 @@ import Base: reset
 export AbstractBackoff, Backoff, RandomizedBackoff, reset, backoff_min, backoff_max
 export AbstractRetry, Retry, retry, set_function
 
-abstract AbstractBackoff
+abstract type AbstractBackoff end
 
 "A backoff that follows a atan curve, and reaches about 90% of max backoff in 12 attempts."
 type Backoff <: AbstractBackoff
@@ -54,7 +54,7 @@ function (b::RandomizedBackoff)()
     max(backoff_min(b), min(backoff_max(b), v + r))
 end
 
-abstract AbstractRetry
+abstract type AbstractRetry end
 
 default_timer_factory = (f, d) -> Timer(f, d)
 
